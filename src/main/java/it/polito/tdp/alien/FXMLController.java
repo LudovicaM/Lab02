@@ -1,24 +1,39 @@
-/**
- * Sample Skeleton for 'Scene.fxml' Controller Class
- */
-
 package it.polito.tdp.alien;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 public class FXMLController {
+	
+	Dizionario dizionario = new Dizionario();
+	
+    @FXML
+    private Button btnTranslate;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
+    @FXML
+    private TextField txtParole;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
+    @FXML
+    private TextArea txtTraduzione;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-
+    @FXML
+    void doTranslate(ActionEvent event) {
+    	if (txtParole.getText().contains(" ")) { //allora devo inserire la parola nel dizionario
+    		String array[] = txtParole.getText().toLowerCase().split(" ");
+    		String parolaAliena = array[0];
+    		String traduzione = array[1];
+    		if (parolaAliena.matches("[A-Z a-z]*") == true && traduzione.matches("[A-Z a-z]*") == true) {
+    			dizionario.putParolaDizionario(parolaAliena, traduzione); //inserisco le parole nel dizionario
+    		}
+    	}
+    	else {
+    		txtTraduzione.setText(dizionario.traduci(txtParole.getText().toLowerCase()));
+    	}
+    	txtParole.clear();
     }
+    	
 
 }
